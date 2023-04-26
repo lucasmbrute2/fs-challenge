@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id      String @id
+  cnpj    String @unique
+  name    String
+  email   String @unique
+  phone   String
+  address String
+
+  employee Employee[]
+
+  @@map("companies")
+}
+
+model Employee {
+  id      String @id
+  cpf     String @unique
+  name    String
+  email   String @unique
+  phone   String
+  address String
+
+  Company   Company @relation(fields: [companyId], references: [id])
+  companyId String
+
+  @@index([companyId])
+  @@map("employees")
+}
