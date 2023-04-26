@@ -20,12 +20,20 @@ const makeSut = (): SutTypes => {
 }
 
 describe("DbAddCompany Use Case", () => {
-  it("Should call AddCompanyRepository with correct values", async () => {
+  it("Should call AddCompanyRepository and Company with correct values", async () => {
     const { addCompanyRepositoryStub, sut } = makeSut()
     const addSpy = vi.spyOn(addCompanyRepositoryStub, 'add')
-    await sut.add(makeCompanyModel())
+    const companyResponse = await sut.add(makeCompanyModel())
 
-    const company = new Company(makeCompanyModel())
+    const company = new Company({ ...makeCompanyModel(), id: companyResponse.id })
     expect(addSpy).toHaveBeenCalledWith(company)
+  })
+
+  it("Should return a Company on success", async () => {
+    const { sut } = makeSut()
+    const company = await sut.add(makeCompanyModel())
+
+    expect(company).toEqual(new Company({ ...makeCompanyModel(), id: company.id }))
+    expect(company).toBeInstanceOf(Company)
   })
 })

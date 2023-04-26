@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto"
 import { Employee } from "./employee"
 
 export interface CompanyProps {
-  id: string
+  id?: string
   cnpj: string
   name: string
   email: string

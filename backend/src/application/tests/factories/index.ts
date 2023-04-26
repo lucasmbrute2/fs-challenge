@@ -6,7 +6,6 @@ export const makeCompanyModel = (): AddCompanyModel => ({
   address: 'any-address',
   cnpj: 'any-cnpj',
   email: 'any-email',
-  id: 'any-id',
   name: 'any-name',
   phone: 'any-phone'
 })

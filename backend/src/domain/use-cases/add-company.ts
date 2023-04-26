@@ -1,7 +1,6 @@
 import { Company } from "../entities/company";
 
 export interface AddCompanyModel {
-  id: string
   cnpj: string
   name: string
   email: string
