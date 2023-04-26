@@ -10,6 +10,13 @@ export const makeCompanyProps = (): CompanyProps => ({
   phone: 'any-phone',
 })
 
+export const makeCompany = (override?: Partial<Company>): Company => {
+  return new Company({
+    ...makeCompanyProps(),
+    ...override
+  })
+}
+
 export const makeEmployeeProps = (): EmployeeProps => ({
   id: 'any-id',
   address: 'any-address',
