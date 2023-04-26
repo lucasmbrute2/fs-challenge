@@ -8,7 +8,7 @@ export interface CompanyProps {
   email: string
   phone: string
   address: string
-  employee: Employee[]
+  employee?: Employee[]
 }
 
 export class Company {
@@ -59,8 +59,12 @@ export class Company {
     return this.props.address
   }
 
-  set employee(employee: Employee) {
-    this.props.employee.push(employee)
+  set employee(employee: Employee | Employee[]) {
+    if (Array.isArray(employee)) {
+      this.props.employee = employee
+    } else {
+      this.props.employee.push(employee)
+    }
   }
 
   get employee(): Employee[] {
