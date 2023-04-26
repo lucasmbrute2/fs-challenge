@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 import { Employee } from "./employee"
-import { makeEmployeeProps } from "./factories"
+import { makeEmployeeProps } from "./tests/factories"
 
 interface SutTypes {
   sut: Employee[]

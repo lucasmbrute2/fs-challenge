@@ -1,5 +1,5 @@
-import { Company, CompanyProps } from "../company";
-import { EmployeeProps } from "../employee";
+import { Company, CompanyProps } from "../../company";
+import { EmployeeProps } from "../../employee";
 
 export const makeCompanyProps = (): CompanyProps => ({
   address: 'any-address',

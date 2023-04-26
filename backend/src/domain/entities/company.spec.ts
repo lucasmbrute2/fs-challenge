@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 import { Company } from "./company"
-import { makeCompanyProps } from "./factories"
+import { makeCompanyProps } from "./tests/factories"
 
 interface SutTypes {
   sut: Company
