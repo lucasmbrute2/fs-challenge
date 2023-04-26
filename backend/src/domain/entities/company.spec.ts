@@ -1,20 +1,6 @@
-import { describe, expect, it, vi } from "vitest"
-import { Company, CompanyProps } from "./company"
-import { Employee } from "./employee"
-
-const makeEmployee = (): Employee[] => {
-  return [new Employee()]
-}
-
-const makeCompanyProps = (): CompanyProps => ({
-  address: 'any-address',
-  cnpj: 'any-cnpj',
-  email: 'any-email',
-  id: 'any-id',
-  name: 'any-name',
-  phone: 'any-phone',
-  employee: makeEmployee()
-})
+import { describe, expect, it } from "vitest"
+import { Company } from "./company"
+import { makeCompanyProps } from "./factories"
 
 interface SutTypes {
   sut: Company
