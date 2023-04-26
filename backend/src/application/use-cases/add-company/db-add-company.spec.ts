@@ -2,20 +2,20 @@ import { AddCompanyRepository } from "@/application/protocols/add-company-reposi
 import { Company } from "@/domain/entities/company";
 import { makeCompanyProps } from "@/domain/entities/tests/factories";
 import { describe, expect, it, vi } from "vitest";
-import { DbAddCompany } from "./db-add-company";
+import { DbAddCompanyUseCase } from "./db-add-company";
 import { makeAddCompanyRepository, makeCompanyModel } from "@/application/tests/factories";
 
 interface SutTypes {
-  sut: DbAddCompany
+  sut: DbAddCompanyUseCase
   addCompanyRepositoryStub: AddCompanyRepository
 }
 
 const makeSut = (): SutTypes => {
   const addCompanyRepositoryStub = makeAddCompanyRepository()
-  const dbAddCompany = new DbAddCompany(addCompanyRepositoryStub)
+  const dbAddCompanyUseCase = new DbAddCompanyUseCase(addCompanyRepositoryStub)
 
   return {
-    sut: dbAddCompany,
+    sut: dbAddCompanyUseCase,
     addCompanyRepositoryStub
   }
 }

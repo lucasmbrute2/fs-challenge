@@ -2,7 +2,7 @@ import { AddCompanyRepository } from "@/application/protocols/add-company-reposi
 import { Company } from "@/domain/entities/company";
 import { AddCompany, AddCompanyModel } from "@/domain/use-cases/add-company";
 
-export class DbAddCompany implements AddCompany {
+export class DbAddCompanyUseCase implements AddCompany {
   constructor(private readonly addCompanyRepository: AddCompanyRepository) { }
 
   async add(companyData: AddCompanyModel): Promise<Company> {
