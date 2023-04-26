@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto"
+import { Employee } from "./employee"
 
 export interface CompanyProps {
   id: string
@@ -7,6 +8,7 @@ export interface CompanyProps {
   email: string
   phone: string
   address: string
+  employee: Employee[]
 }
 
 export class Company {
@@ -55,5 +57,13 @@ export class Company {
 
   get address(): string {
     return this.props.address
+  }
+
+  set employee(employee: Employee) {
+    this.props.employee.push(employee)
+  }
+
+  get employee(): Employee[] {
+    return this.props.employee
   }
 }
