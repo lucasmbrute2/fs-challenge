@@ -1,5 +1,10 @@
 import { describe, expect, it, vi } from "vitest"
 import { Company, CompanyProps } from "./company"
+import { Employee } from "./employee"
+
+const makeEmployee = (): Employee[] => {
+  return [new Employee()]
+}
 
 const makeCompanyProps = (): CompanyProps => ({
   address: 'any-address',
@@ -7,7 +12,8 @@ const makeCompanyProps = (): CompanyProps => ({
   email: 'any-email',
   id: 'any-id',
   name: 'any-name',
-  phone: 'any-phone'
+  phone: 'any-phone',
+  employee: makeEmployee()
 })
 
 interface SutTypes {
@@ -21,7 +27,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe("Company entity", () => {
-  it("should be able to instance a Company", () => {
+  it("should be able to instance a Company with correct values", () => {
     const { sut } = makeSut()
 
     expect(sut).toBeInstanceOf(Company)
