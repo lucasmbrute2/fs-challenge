@@ -11,7 +11,6 @@ export const makeCompanyModel = (): AddCompanyModel => ({
   phone: 'any-phone'
 })
 
-
 export const makeAddCompanyRepository = (): AddCompanyRepository => {
   class AddCompanyRepositoryStub implements AddCompanyRepository {
     async add(companyData: Company): Promise<Company> {
