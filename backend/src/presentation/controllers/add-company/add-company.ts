@@ -26,7 +26,7 @@ export class AddCompanyController implements Controller {
         employee
       })
 
-      if (!company) return badRequest(new BadRequestError("Invalid company"))
+      if (!company) return badRequest(new BadRequestError("Company already exists"))
 
       return created(company)
     } catch (error) {

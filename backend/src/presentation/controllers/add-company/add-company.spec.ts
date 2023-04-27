@@ -77,7 +77,7 @@ describe("Add Company Controller", () => {
       body: makeCompanyModel()
     })
 
-    expect(httpResponse).toEqual(badRequest(new BadRequestError("Invalid company")))
+    expect(httpResponse).toEqual(badRequest(new BadRequestError("Company already exists")))
     expect(httpResponse.statusCode).toBe(400)
   })
 })
