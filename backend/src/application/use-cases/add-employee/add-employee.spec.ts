@@ -1,21 +1,26 @@
 import { describe, expect, it, vi } from "vitest";
 import { DbAddEmployeeUseCase } from "./add-employee";
-import { makeAddEmployeeRepository, makeEmployeeModel } from "@/application/tests/factories";
+import { makeAddEmployeeRepository, makeEmployeeModel, makeFindEmployeeRepository } from "@/application/tests/factories";
 import { AddEmployeeRepository } from "@/application/protocols/add-employee-repository";
 import { Employee } from "@/domain/entities/employee";
+import { FindEmployeeRepository } from "@/application/protocols/find-employee-repository";
+import { makeEmployee } from "@/domain/entities/tests/factories";
 
 interface SutTypes {
   sut: DbAddEmployeeUseCase
   addEmployeeStub: AddEmployeeRepository
+  findEmployeeStub: FindEmployeeRepository
 }
 
 const makeSut = (): SutTypes => {
+  const findEmployeeStub = makeFindEmployeeRepository()
   const addEmployeeStub = makeAddEmployeeRepository()
-  const sut = new DbAddEmployeeUseCase(addEmployeeStub)
+  const sut = new DbAddEmployeeUseCase(addEmployeeStub, findEmployeeStub)
 
   return {
     sut,
-    addEmployeeStub
+    addEmployeeStub,
+    findEmployeeStub
   }
 }
 
@@ -35,5 +40,13 @@ describe("DbAddEmployee Use Case", () => {
 
     expect(employee).toEqual(new Employee({ ...makeEmployeeModel(), id: employee.id }))
     expect(employee).toBeInstanceOf(Employee)
+  })
+
+  it("Should return null if Employee is already added", async () => {
+    const { findEmployeeStub, sut } = makeSut()
+    vi.spyOn(findEmployeeStub, 'find').mockReturnValueOnce(Promise.resolve(makeEmployee()))
+
+    const response = await sut.add(makeEmployeeModel())
+    expect(response).toBeFalsy()
   })
 })

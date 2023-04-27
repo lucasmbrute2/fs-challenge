@@ -42,7 +42,7 @@ describe("DbAddCompany Use Case", () => {
     expect(company).toBeInstanceOf(Company)
   })
 
-  it("Should return 400 if Company is already added", async () => {
+  it("Should return null if Company is already added", async () => {
     const { sut, findCompanyByCnpjStub } = makeSut()
     vi.spyOn(findCompanyByCnpjStub, 'find').mockReturnValueOnce(Promise.resolve(makeCompany()))
     const response = await sut.add(makeCompanyModel())
