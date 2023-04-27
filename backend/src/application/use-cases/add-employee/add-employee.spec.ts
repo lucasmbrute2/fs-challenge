@@ -28,4 +28,12 @@ describe("DbAddEmployee Use Case", () => {
     const employee = new Employee({ ...makeEmployeeModel(), id: response.id })
     expect(addSpy).toHaveBeenCalledWith(employee)
   })
+
+  it("Should return an Employee on success", async () => {
+    const { sut } = makeSut()
+    const employee = await sut.add(makeEmployeeModel())
+
+    expect(employee).toEqual(new Employee({ ...makeEmployeeModel(), id: employee.id }))
+    expect(employee).toBeInstanceOf(Employee)
+  })
 })
