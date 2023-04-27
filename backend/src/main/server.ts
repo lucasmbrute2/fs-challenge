@@ -11,7 +11,7 @@ async function main() {
 main()
   .then(() => {
     console.info("Prisma connected")
-    app.listen(env.PORT, () => console.log(`Server running on port ${env.PORT}`))
+    app.listen(Number(env.PORT), () => console.log(`Server running on port ${env.PORT}`))
   })
   .catch(async (e) => {
     await prisma.$disconnect()

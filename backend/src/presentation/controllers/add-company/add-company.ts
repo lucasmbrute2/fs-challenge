@@ -8,7 +8,8 @@ export class AddCompanyController implements Controller {
 
   async handle(httpRequest: httpRequest): Promise<HttpResponse> {
     try {
-      const { cnpj,
+      const {
+        cnpj,
         name,
         email,
         phone,
