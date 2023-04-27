@@ -1,7 +1,7 @@
 import { CompanyRepository } from "@/application/protocols/add-company-repository";
 import { Company } from "@/domain/entities/company";
-import { PrismaClient } from "@prisma/client"
 import { PrismaCompanyMapper } from "./mappers/company-mapper";
+import { PrismaClient } from "@prisma/client";
 
 export class PrismaCompanyRepository implements CompanyRepository {
   private readonly prisma = new PrismaClient()
