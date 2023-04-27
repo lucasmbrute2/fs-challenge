@@ -28,3 +28,10 @@ export function created(data: any): HttpResponse {
     statusCode: 201
   }
 }
+
+export function conflict(error: Error): HttpResponse {
+  return {
+    body: error?.message,
+    statusCode: 409
+  }
+}
