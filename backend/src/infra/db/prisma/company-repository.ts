@@ -4,8 +4,11 @@ import { PrismaCompanyMapper } from "./mappers/company-mapper";
 import { PrismaClient } from "@prisma/client";
 import { FindCompanyRepository } from "@/application/protocols/find-company-repository";
 import { randomUUID } from "node:crypto";
+import { FindManyCompaniesRepository } from "@/application/protocols/find-many-companies-repository";
+import { Employee } from "@/domain/entities/employee";
 
-export class PrismaCompanyRepository implements AddCompanyRepository, FindCompanyRepository {
+
+export class PrismaCompanyRepository implements AddCompanyRepository, FindCompanyRepository, FindManyCompaniesRepository {
   private readonly prisma = new PrismaClient()
 
   async add(companyData: Company): Promise<Company> {
@@ -38,5 +41,16 @@ export class PrismaCompanyRepository implements AddCompanyRepository, FindCompan
 
     if (!company) return null
     return new Company(company)
+  }
+
+  async findMany(): Promise<Company[]> {
+    const companies = await this.prisma.company.findMany({
+      include: {
+        employee: true
+      }
+    })
+    //@ts-ignore
+    return companies.map(company => new Company(company)
+    )
   }
 }

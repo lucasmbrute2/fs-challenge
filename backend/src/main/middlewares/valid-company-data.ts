@@ -20,6 +20,8 @@ const validationByRoutePaths = {
 type Paths = keyof typeof validationByRoutePaths
 
 export function validateCompanyBody(req: Request, res: Response, next: NextFunction) {
+  if (req.method !== "POST") return next()
+
   const validation = validationByRoutePaths[req.path as Paths].safeParse(req.body)
 
   if (validation.success === false) {
