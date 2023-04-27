@@ -1,7 +1,8 @@
 import { Controller } from "@/presentation/protocols/controller";
 import { httpRequest, HttpResponse } from "@/presentation/protocols/http";
 import { AddCompany } from "@/domain/use-cases/add-company"
-import { created, serverError } from "@/presentation/helpers/http-helper";
+import { badRequest, created, serverError } from "@/presentation/helpers/http-helper";
+import { BadRequestError } from "@/presentation/errors/bad-request-error";
 
 export class AddCompanyController implements Controller {
   constructor(private readonly addCompany: AddCompany) { }
@@ -24,6 +25,8 @@ export class AddCompanyController implements Controller {
         address,
         employee
       })
+
+      if (!company) return badRequest(new BadRequestError("Invalid company"))
 
       return created(company)
     } catch (error) {
