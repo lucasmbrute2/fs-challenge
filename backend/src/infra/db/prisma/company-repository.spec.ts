@@ -39,7 +39,7 @@ describe("CompanyRepository", () => {
 
   it("should return a Company on success", async () => {
     const sut = makeSut()
-    const company = await sut.add(makeCompany())
+    const company = await sut.add(makeCompany({ employee: [] }))
 
     expect(company).toBeInstanceOf(Company)
     expect(company).toBeTruthy()

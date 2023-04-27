@@ -3,13 +3,20 @@ import { Company } from "@/domain/entities/company";
 import { PrismaCompanyMapper } from "./mappers/company-mapper";
 import { PrismaClient } from "@prisma/client";
 import { FindCompanyRepository } from "@/application/protocols/find-company-repository";
+import { randomUUID } from "node:crypto";
 
 export class PrismaCompanyRepository implements AddCompanyRepository, FindCompanyRepository {
   private readonly prisma = new PrismaClient()
 
   async add(companyData: Company): Promise<Company> {
+    companyData?.employee?.forEach(employee => employee.id ||= randomUUID())
     const company = await this.prisma.company.create({
-      data: PrismaCompanyMapper.toPrisma(companyData)
+      data: {
+        ...PrismaCompanyMapper.toPrisma(companyData),
+        employee: {
+          create: [...companyData.employee]
+        }
+      }
     })
 
     return new Company(company)

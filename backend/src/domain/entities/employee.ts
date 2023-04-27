@@ -18,6 +18,10 @@ export class Employee {
     }
   }
 
+  set id(id: string) {
+    this.props.id ||= id
+  }
+
   get id(): string {
     return this.props.id
   }
