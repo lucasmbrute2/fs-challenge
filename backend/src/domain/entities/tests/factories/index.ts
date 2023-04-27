@@ -1,5 +1,5 @@
 import { Company, CompanyProps } from "../../company";
-import { EmployeeProps } from "../../employee";
+import { Employee, EmployeeProps } from "../../employee";
 
 export const makeCompanyProps = (): CompanyProps => ({
   id: 'any-id',
@@ -26,3 +26,10 @@ export const makeEmployeeProps = (): EmployeeProps => ({
   name: 'any-name',
   phone: 'any-phone'
 })
+
+export const makeEmployee = (override?: Partial<Employee>): Employee => {
+  return new Employee({
+    ...makeEmployeeProps(),
+    ...override
+  })
+}

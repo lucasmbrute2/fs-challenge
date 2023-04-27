@@ -1,6 +1,7 @@
 import { AddCompanyRepository } from "@/application/protocols/add-company-repository";
 import { AddEmployeeRepository } from "@/application/protocols/add-employee-repository";
 import { FindCompanyRepository } from "@/application/protocols/find-company-repository";
+import { FindEmployeeRepository } from "@/application/protocols/find-employee-repository";
 import { Company } from "@/domain/entities/company";
 import { Employee } from "@/domain/entities/employee";
 import { AddCompanyModel } from "@/domain/use-cases/add-company";
@@ -51,4 +52,13 @@ export const makeAddEmployeeRepository = (): AddEmployeeRepository => {
   }
 
   return new AddEmployeeStub()
+}
+
+export const makeFindEmployeeRepository = (): FindEmployeeRepository => {
+  class FindEmployeeStub implements FindEmployeeRepository {
+    find(email: string, cpf: string): Promise<Employee> {
+      return Promise.resolve(null)
+    }
+  }
+  return new FindEmployeeStub()
 }
