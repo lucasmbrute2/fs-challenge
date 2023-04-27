@@ -10,5 +10,5 @@ export interface AddCompanyModel {
 }
 
 export interface AddCompany {
-  add(company: AddCompanyModel): Promise<Company>
+  add(company: AddCompanyModel): Promise<Company | null>
 }

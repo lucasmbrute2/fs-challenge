@@ -5,6 +5,6 @@ import { Controller } from "@/presentation/protocols/controller";
 
 export const makeAddCompanyController = (): Controller => {
   const companyRepository = new PrismaCompanyRepository()
-  const addCompanyUseCase = new DbAddCompanyUseCase(companyRepository)
+  const addCompanyUseCase = new DbAddCompanyUseCase(companyRepository, companyRepository)
   return new AddCompanyController(addCompanyUseCase)
 }

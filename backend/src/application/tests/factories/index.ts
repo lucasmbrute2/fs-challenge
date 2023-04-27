@@ -1,4 +1,5 @@
 import { AddCompanyRepository } from "@/application/protocols/add-company-repository";
+import { FindCompanyRepository } from "@/application/protocols/find-company-repository";
 import { Company } from "@/domain/entities/company";
 import { AddCompanyModel } from "@/domain/use-cases/add-company";
 
@@ -18,4 +19,14 @@ export const makeAddCompanyRepository = (): AddCompanyRepository => {
   }
 
   return new AddCompanyRepositoryStub()
+}
+
+export const makeFindCompanyByCnpjRepository = (): FindCompanyRepository => {
+  class FindCompanyByCnpjStub implements FindCompanyRepository {
+    async find(cnpj: string, email: string): Promise<Company> {
+      return Promise.resolve(null)
+    }
+  }
+
+  return new FindCompanyByCnpjStub()
 }
