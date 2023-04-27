@@ -66,4 +66,16 @@ describe("AddEmployeeController", () => {
     expect(httpResponse).toEqual(created(httpResponse.body))
     expect(httpResponse.statusCode).toBe(201)
   })
+
+  it("Should return 400 if incorrect data is provided", async () => {
+    const { addEmployeeStub, sut } = makeSut()
+    vi.spyOn(addEmployeeStub, 'add').mockReturnValueOnce(Promise.resolve(null))
+
+    const httpResponse = await sut.handle({
+      body: makeEmployeeModel()
+    })
+
+    expect(httpResponse).toEqual(badRequest(new BadRequestError("Employee already exists")))
+    expect(httpResponse.statusCode).toBe(400)
+  })
 })
