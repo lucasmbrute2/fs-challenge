@@ -4,8 +4,9 @@ import { AddCompany, AddCompanyModel } from "@/domain/use-cases/add-company";
 import { Company } from "@/domain/entities/company";
 import { makeCompany } from "@/domain/entities/tests/factories";
 import { makeCompanyModel } from "@/application/tests/factories";
-import { created, serverError } from "@/presentation/helpers/http-helper";
+import { badRequest, created, serverError } from "@/presentation/helpers/http-helper";
 import { ServerError } from "@/presentation/errors/server-error";
+import { BadRequestError } from "@/presentation/errors/bad-request-error";
 
 
 const makeAddCompany = (): AddCompany => {
@@ -66,5 +67,17 @@ describe("Add Company Controller", () => {
 
     expect(httpResponse).toEqual(created(httpResponse.body))
     expect(httpResponse.statusCode).toBe(201)
+  })
+
+  it("Should return 400 if incorrect data is provided", async () => {
+    const { sut, addCompanyStub } = makeSut()
+    vi.spyOn(addCompanyStub, "add").mockReturnValueOnce(Promise.resolve(null))
+
+    const httpResponse = await sut.handle({
+      body: makeCompanyModel()
+    })
+
+    expect(httpResponse).toEqual(badRequest(new BadRequestError("Invalid company")))
+    expect(httpResponse.statusCode).toBe(400)
   })
 })
