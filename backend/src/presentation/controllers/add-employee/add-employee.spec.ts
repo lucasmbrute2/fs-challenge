@@ -56,4 +56,14 @@ describe("AddEmployeeController", () => {
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
     expect(httpResponse.statusCode).toBe(500)
   })
+
+  it("Should return 201 if correct data is provided", async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({
+      body: makeEmployeeModel()
+    })
+
+    expect(httpResponse).toEqual(created(httpResponse.body))
+    expect(httpResponse.statusCode).toBe(201)
+  })
 })
