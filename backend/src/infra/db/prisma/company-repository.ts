@@ -1,9 +1,9 @@
-import { AddCompanyRepository } from "@/application/protocols/add-company-repository";
+import { CompanyRepository } from "@/application/protocols/add-company-repository";
 import { Company } from "@/domain/entities/company";
 import { PrismaClient } from "@prisma/client"
 import { PrismaCompanyMapper } from "./mappers/company-mapper";
 
-export class CompanyRepository implements AddCompanyRepository {
+export class PrismaCompanyRepository implements CompanyRepository {
   private readonly prisma = new PrismaClient()
 
   async add(companyData: Company): Promise<Company> {

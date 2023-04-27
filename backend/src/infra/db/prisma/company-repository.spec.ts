@@ -2,12 +2,12 @@ import { execSync } from "child_process";
 import { randomUUID } from "crypto";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { PrismaClient } from "@prisma/client"
-import { CompanyRepository } from "./company-repository";
+import { PrismaCompanyRepository } from "./company-repository";
 import { makeCompany } from "@/domain/entities/tests/factories";
 import { Company } from "@/domain/entities/company";
 
-const makeSut = (): CompanyRepository => {
-  return new CompanyRepository()
+const makeSut = (): PrismaCompanyRepository => {
+  return new PrismaCompanyRepository()
 }
 
 describe("CompanyRepository", () => {
@@ -15,8 +15,6 @@ describe("CompanyRepository", () => {
   let schema: string
 
   beforeAll(() => {
-    console.log(process.env.DATABASE_URL)
-
     if (!process.env.DATABASE_URL) {
       throw new Error('Please provide a DATABASE_URL environment variable')
     }
@@ -46,6 +44,5 @@ describe("CompanyRepository", () => {
     expect(company).toBeInstanceOf(Company)
     expect(company).toBeTruthy()
     expect(company).toEqual(makeCompany())
-
   })
 })
