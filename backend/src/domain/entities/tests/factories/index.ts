@@ -20,7 +20,7 @@ export const makeCompany = (override?: Partial<Company>): Company => {
 export const makeEmployeeProps = (): EmployeeProps => ({
   id: 'any-id',
   address: 'any-address',
-  company: new Company(makeCompanyProps()),
+  companyId: new Company(makeCompanyProps()).id,
   cpf: 'any-cpf',
   email: 'any-email',
   name: 'any-name',
