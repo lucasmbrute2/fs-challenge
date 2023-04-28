@@ -3,10 +3,10 @@ import { execSync } from "child_process";
 import { randomUUID } from "crypto";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { PrismaEmployeeRepository } from "./employee-repository";
-import { makeEmployee } from "@/domain/entities/tests/factories";
+import { makeCompany, makeEmployee } from "@/domain/entities/tests/factories";
 import { Employee } from "@/domain/entities/employee";
+import { PrismaEmployeeMapper } from "./mappers/employee-mapper";
 import { PrismaCompanyMapper } from "./mappers/company-mapper";
-import { makeCompany } from "@/domain/entities/tests/factories";
 
 const makeSut = (): PrismaEmployeeRepository => {
   return new PrismaEmployeeRepository()
@@ -51,5 +51,23 @@ describe("PrismaEmployeeRepository", () => {
     expect(employee).toBeInstanceOf(Employee)
     expect(employee).toBeTruthy()
     expect(employee).toEqual(makeEmployee())
+  })
+
+  // find()
+  it.skip("Should return an Employee on success", async () => {
+    const companyModel = makeCompany()
+    await prisma.company.create({
+      data: PrismaCompanyMapper.toPrisma(companyModel)
+    })
+
+    const sut = makeSut()
+    const employeeModel = makeEmployee({ companyId: companyModel.id })
+    await prisma.employee.create({
+      data: PrismaEmployeeMapper.toPrisma(employeeModel)
+    })
+
+    const employee = await sut.find(employeeModel.email, employeeModel.cpf)
+    expect(employee).toBeInstanceOf(Employee)
+    expect(employee).toEqual(expect.objectContaining(employeeModel))
   })
 })
