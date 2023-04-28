@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { PrismaClient } from "@prisma/client"
 import { PrismaCompanyRepository } from "./company-repository";
-import { makeCompany, makeEmployee } from "@/domain/entities/tests/factories";
+import { makeCompany } from "@/domain/entities/tests/factories";
 import { Company } from "@/domain/entities/company";
 import { PrismaCompanyMapper } from "./mappers/company-mapper";
 
