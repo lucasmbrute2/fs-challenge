@@ -37,6 +37,7 @@ describe("PrismaEmployeeRepository", () => {
 
   beforeEach(async () => {
     await prisma.company.deleteMany({})
+    await prisma.employee.deleteMany({})
   })
 
   // add()
@@ -54,20 +55,20 @@ describe("PrismaEmployeeRepository", () => {
   })
 
   // find()
-  it.skip("Should return an Employee on success", async () => {
-    const companyModel = makeCompany()
-    await prisma.company.create({
-      data: PrismaCompanyMapper.toPrisma(companyModel)
-    })
+  // it("Should return an Employee on success", async () => {
+  //   const companyModel = makeCompany()
+  //   await prisma.company.create({
+  //     data: PrismaCompanyMapper.toPrisma(companyModel)
+  //   })
 
-    const sut = makeSut()
-    const employeeModel = makeEmployee({ companyId: companyModel.id })
-    await prisma.employee.create({
-      data: PrismaEmployeeMapper.toPrisma(employeeModel)
-    })
+  //   const sut = makeSut()
+  //   const employeeModel = makeEmployee({ companyId: companyModel.id })
+  //   await prisma.employee.create({
+  //     data: PrismaEmployeeMapper.toPrisma(employeeModel)
+  //   })
 
-    const employee = await sut.find(employeeModel.email, employeeModel.cpf)
-    expect(employee).toBeInstanceOf(Employee)
-    expect(employee).toEqual(expect.objectContaining(employeeModel))
-  })
+  //   const employee = await sut.find(employeeModel.email, employeeModel.cpf)
+  //   expect(employee).toBeInstanceOf(Employee)
+  //   expect(employee).toEqual(expect.objectContaining(employeeModel))
+  // })
 })
