@@ -3,8 +3,9 @@ import { randomUUID } from "crypto";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { PrismaClient } from "@prisma/client"
 import { PrismaCompanyRepository } from "./company-repository";
-import { makeCompany } from "@/domain/entities/tests/factories";
+import { makeCompany, makeEmployee } from "@/domain/entities/tests/factories";
 import { Company } from "@/domain/entities/company";
+import { PrismaCompanyMapper } from "./mappers/company-mapper";
 
 const makeSut = (): PrismaCompanyRepository => {
   return new PrismaCompanyRepository()
@@ -37,6 +38,7 @@ describe("CompanyRepository", () => {
     await prisma.company.deleteMany({})
   })
 
+  // add()
   it("should return a Company on success", async () => {
     const sut = makeSut()
     const company = await sut.add(makeCompany({ employee: [] }))
@@ -44,5 +46,19 @@ describe("CompanyRepository", () => {
     expect(company).toBeInstanceOf(Company)
     expect(company).toBeTruthy()
     expect(company).toEqual(makeCompany())
+  })
+
+  // find()
+  it("should return an Company on success", async () => {
+    const sut = makeSut()
+    const companyProps = makeCompany()
+    await prisma.company.create({
+      data: PrismaCompanyMapper.toPrisma(companyProps)
+    })
+    const company = await sut.find(companyProps.cnpj, companyProps.email)
+    expect(company).toBeTruthy()
+    expect(company).toBeInstanceOf(Company)
+    expect(company).toEqual(expect.objectContaining(companyProps))
+
   })
 })

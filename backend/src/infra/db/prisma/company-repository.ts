@@ -5,7 +5,6 @@ import { PrismaClient } from "@prisma/client";
 import { FindCompanyRepository } from "@/application/protocols/find-company-repository";
 import { randomUUID } from "node:crypto";
 import { FindManyCompaniesRepository } from "@/application/protocols/find-many-companies-repository";
-import { Employee } from "@/domain/entities/employee";
 
 
 export class PrismaCompanyRepository implements AddCompanyRepository, FindCompanyRepository, FindManyCompaniesRepository {
