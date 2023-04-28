@@ -39,7 +39,7 @@ describe("CompanyRepository", () => {
   })
 
   // add()
-  it("should return a Company on success", async () => {
+  it("Should return a Company on success", async () => {
     const sut = makeSut()
     const company = await sut.add(makeCompany({ employee: [] }))
 
@@ -49,7 +49,7 @@ describe("CompanyRepository", () => {
   })
 
   // find()
-  it("should return an Company on success", async () => {
+  it("Should return an Company on success", async () => {
     const sut = makeSut()
     const companyProps = makeCompany()
     await prisma.company.create({
@@ -59,6 +59,19 @@ describe("CompanyRepository", () => {
     expect(company).toBeTruthy()
     expect(company).toBeInstanceOf(Company)
     expect(company).toEqual(expect.objectContaining(companyProps))
+  })
 
+  // findMany()
+  it("Should return an array of companies on success", async () => {
+    const sut = makeSut()
+    const companyProps = makeCompany({ employee: [] })
+    await prisma.company.create({
+      data: PrismaCompanyMapper.toPrisma(companyProps)
+    })
+
+    const companies = await sut.findMany()
+    expect(companies).toHaveLength(1)
+    expect(companies[0]).toBeInstanceOf(Company)
+    expect(companies[0]).toEqual(expect.objectContaining(companyProps))
   })
 })
