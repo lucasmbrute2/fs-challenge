@@ -15,7 +15,8 @@ export class Company {
   constructor(private props: CompanyProps) {
     this.props = {
       ...props,
-      id: this.props.id ?? randomUUID()
+      id: this.props.id ?? randomUUID(),
+      employee: this.props.employee ?? []
     }
   }
 
