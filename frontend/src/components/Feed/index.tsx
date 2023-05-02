@@ -1,7 +1,9 @@
+import axios from "axios";
 import { Expandable } from "../Expandable"
-import { FormModal } from "../FormModal";
+import { FormModal, NewCompanyFormInputs } from "../FormModal";
 import * as S from "./style"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+import { api } from "../../api/api";
 
 type Company = {
     name: string;
@@ -13,45 +15,48 @@ type Company = {
 }
 
 export function Feed(){
-    const [companies, setCompanies] = useState<Company[]>([{
-        address: 'Rua bla bla bla',
-        cnpj: '393081931/78',
-        email: 'company@gmail.com',
-        id: 'DJ1O419MKA',
-        name: 'Google',
-        phone: '319840331'
-    }, 
-    {
-        address: 'Rua bla bla bla',
-        cnpj: '393081931/78',
-        email: 'company@gmail.com',
-        id: 'DJ1O419MKA',
-        name: 'Google',
-        phone: '319840331'
-    }])
-
+    const [companies, setCompanies] = useState<Company[]>([])
     const [openModal, setOpenModal] = useState(false)
 
     useEffect(()=> {
         async function getCompanies(){
-            const response = await fetch(`${process.env.HOST}:${process.env.PORT}/companies`)
-            const payload = await response.json();
-            setCompanies(payload)
+            try {
+                const response = await api.get("/company")
+                if (!response?.data) {
+                    alert("Error")
+                }
+                setCompanies(response?.data)
+            } catch (error) {
+                console.error(error)
+                alert("Error")
+            }
         }
         getCompanies()
     },[])
 
-    async function cb(){
-        return Promise.resolve(null)
-    }
-
-    function toggleModal(bool?:boolean){
+    const handleNewCompany = useCallback(async (data: NewCompanyFormInputs) => {
+        try {
+            const response = await api.post(`/company`, data)
+            if (!response?.data) {
+                alert("Error")
+            }
+            setCompanies((prev=>[...prev, response.data]))
+            
+        } catch (error) {
+            console.error(error)
+            alert("Error")
+        } finally {
+            setOpenModal(false)
+        }
+    },[])
+ 
+    const toggleModal = useCallback((bool)=> {
         if (bool) {
             setOpenModal(bool)
         } else {
             setOpenModal(prev=> !prev)
         }
-    }
+    },[])
 
     return (
         <>
@@ -74,7 +79,7 @@ export function Feed(){
                 ))}
             </S.Feed>
             <div>
-                <FormModal cb={cb} title="Cadastrar empresa" modalState={openModal} toggleModal={toggleModal}/>
+                <FormModal cb={handleNewCompany} title="Cadastrar empresa" modalState={openModal} toggleModal={toggleModal}/>
             </div>
         </>
     )
