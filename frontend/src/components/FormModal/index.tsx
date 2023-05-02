@@ -20,11 +20,19 @@ const formSchema = z.object({
 
 export type NewCompanyFormInputs = z.infer<typeof formSchema>
 
+export type FormFields = Array<{
+    label: string;
+    name: "id" | "name" | "email" | "phone" | "address" | "cnpj";
+    type: "text" | "email" | "password" | "number" | "date";
+    placeholder: string;
+}> 
+
 interface ModalProps {
-    cb(data: NewCompanyFormInputs):void
+    onSubmit(data: NewCompanyFormInputs):void
     toggleModal(bool?: boolean): void
     modalState: boolean
     title: string
+    formFields: FormFields
 }
 
 const style = {
@@ -39,7 +47,7 @@ const style = {
     p: 4,
 };
 
-export function FormModal({ cb, toggleModal, modalState, title }: ModalProps){
+export function FormModal({ onSubmit, toggleModal, modalState, title, formFields }: ModalProps){
     const { 
         register, 
         handleSubmit, 
@@ -64,37 +72,14 @@ export function FormModal({ cb, toggleModal, modalState, title }: ModalProps){
                         {title}
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        <S.FormContainer onSubmit={handleSubmit(cb)}>
-                            <div>
-                                <label htmlFor="name">Nome</label>
-                                <input type="text" {...register('name')}/>
-                                {errors?.name?.message}
-                            </div>
-                            <div>
-                                <label htmlFor="id">Código</label>
-                                <input type="text" {...register('id')}/>
-                                {errors?.id?.message}
-                            </div>
-                            <div>
-                                <label htmlFor="cnpj">CNPJ</label>
-                                <input type="text" {...register('cnpj')}/>
-                                {errors?.cnpj?.message}
-                            </div>
-                            <div>
-                                <label htmlFor="email">Email</label>
-                                <input type="text" {...register('email')}/>
-                                {errors?.email?.message}
-                            </div>
-                            <div>
-                                <label htmlFor="address">Endereço</label>
-                                <input type="text" {...register('address')}/>
-                                {errors?.address?.message}
-                            </div>
-                            <div>
-                                <label htmlFor="phone">Telefone</label>
-                                <input type="text" {...register('phone')}/>
-                                {errors?.phone?.message}
-                            </div>
+                        <S.FormContainer onSubmit={handleSubmit(onSubmit)}>
+                            {formFields.map(({ label, name, placeholder, type })=> (
+                                <div>
+                                    <label htmlFor={name}>{label}</label>
+                                    <input type={type} placeholder={placeholder} {...register(name)}/>
+                                    {errors[name]?.message}
+                                </div>
+                            ))}
                             <button>Enviar</button>
                         </S.FormContainer>
                     </Typography>

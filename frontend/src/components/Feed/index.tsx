@@ -1,21 +1,51 @@
-import axios from "axios";
 import { Expandable } from "../Expandable"
-import { FormModal, NewCompanyFormInputs } from "../FormModal";
+import { FormFields, FormModal, NewCompanyFormInputs } from "../FormModal";
 import * as S from "./style"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { api } from "../../api/api";
+import { CompanyContext } from "../../contexts/ComapanyContext";
 
-type Company = {
-    name: string;
-    id: string;
-    cnpj: string;
-    email: string;
-    address: string;
-    phone: string;
-}
+
+
+const formFields: FormFields = [{
+    label: "Nome",
+    name: 'name',
+    type: 'text',
+    placeholder: ''
+},
+{
+    label: "CNPJ",
+    name: 'cnpj',
+    type: 'text',
+    placeholder: ''
+},
+{
+    label: "Código",
+    name: 'id',
+    type: 'text',
+    placeholder: ''
+},
+{
+    label: "Email",
+    name: 'email',
+    type: 'text',
+    placeholder: ''
+},
+{
+    label: "Endereço",
+    name: 'address',
+    type: 'text',
+    placeholder: ''
+},
+{
+    label: "Telefone",
+    name: 'phone',
+    type: 'text',
+    placeholder: ''
+}]
 
 export function Feed(){
-    const [companies, setCompanies] = useState<Company[]>([])
+    const { companies, setCompanies } = useContext(CompanyContext)
     const [openModal, setOpenModal] = useState(false)
 
     useEffect(()=> {
@@ -41,12 +71,11 @@ export function Feed(){
                 alert("Error")
             }
             setCompanies((prev=>[...prev, response.data]))
+            setOpenModal(false)
             
         } catch (error) {
             console.error(error)
             alert("Error")
-        } finally {
-            setOpenModal(false)
         }
     },[])
  
@@ -79,7 +108,13 @@ export function Feed(){
                 ))}
             </S.Feed>
             <div>
-                <FormModal cb={handleNewCompany} title="Cadastrar empresa" modalState={openModal} toggleModal={toggleModal}/>
+                <FormModal 
+                    onSubmit={handleNewCompany} 
+                    title="Cadastrar empresa" 
+                    modalState={openModal} 
+                    toggleModal={toggleModal}
+                    formFields={formFields}
+                    />
             </div>
         </>
     )
