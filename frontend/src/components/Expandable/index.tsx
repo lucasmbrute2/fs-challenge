@@ -73,7 +73,7 @@ export function Expandable({
                     {showEmployeeAnchor && (
                         <S.TypographyContainer>
                             <div>
-                                <Link to={'/employees/1'}>
+                                <Link to={`/employees/${id}`}>
                                     Ver funcionários
                                 </Link>
                             </div>
