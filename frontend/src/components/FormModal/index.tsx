@@ -69,7 +69,8 @@ export function FormModal({ onSubmit, toggleModal, modalState, title, formFields
                     <Typography id="modal-modal-title" variant="h6" component="h2" sx={{
                         textAlign: "center",
                         color: "#29292E",
-                        fontSize: '2rem'
+                        fontSize: '2rem',
+                        marginTop: "1.5rem"
                     }}>
                         {title}
                     </Typography>

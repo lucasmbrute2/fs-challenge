@@ -90,7 +90,7 @@ export function Employees(){
                 <FormModal 
                     modalState={openModal}
                     onSubmit={handleEmployeeSubmit}
-                    title="Cadastrar funcionários"
+                    title="Cadastrar colaborador"
                     toggleModal={setOpenModal}
                     formFields={formFields}
                 />
@@ -111,7 +111,7 @@ export function Employees(){
             <FormModal 
                 modalState={openModal}
                 onSubmit={handleEmployeeSubmit}
-                title="Cadastrar funcionários"
+                title="Cadastrar colaborador"
                 toggleModal={setOpenModal}
                 formFields={formFields}
             />
