@@ -19,5 +19,29 @@ export const FormContainer = styled.form`
             box-sizing: border-box;
             padding: .25rem;
         }
+        > span {
+            color: ${(props) => props.theme["red-500"]}
+        }
     }
+    
+    > button {
+        color: ${(props) => props.theme["gray-900"]};
+        margin-top: 1rem;
+        padding: 1rem;
+        background-color: ${(props) => props.theme["green-300"]};
+        border: none;
+        cursor: pointer
+    }
+`
+
+export const ModalContainer = styled.div`
+    position: relative;
+`
+export const CloseModalButton = styled.span`
+    cursor: pointer;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    color: ${(props) => props.theme["gray-900"]};
+    font-size: 1.5rem;
 `

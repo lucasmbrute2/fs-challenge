@@ -1,11 +1,10 @@
 import { Expandable } from "../Expandable"
 import { FormFields, FormModal, NewCompanyFormInputs } from "../FormModal";
 import * as S from "./style"
-import { useCallback, useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useState } from "react"
 import { api } from "../../api/api";
 import { CompanyContext } from "../../contexts/ComapanyContext";
-
-
+import { AddButton } from "../AddButton";
 
 const formFields: FormFields = [{
     label: "Nome",
@@ -15,13 +14,7 @@ const formFields: FormFields = [{
 },
 {
     label: "CNPJ",
-    name: 'cnpj',
-    type: 'text',
-    placeholder: ''
-},
-{
-    label: "Código",
-    name: 'id',
+    name: 'document',
     type: 'text',
     placeholder: ''
 },
@@ -48,25 +41,13 @@ export function Feed(){
     const { companies, setCompanies } = useContext(CompanyContext)
     const [openModal, setOpenModal] = useState(false)
 
-    useEffect(()=> {
-        async function getCompanies(){
-            try {
-                const response = await api.get("/company")
-                if (!response?.data) {
-                    alert("Error")
-                }
-                setCompanies(response?.data)
-            } catch (error) {
-                console.error(error)
-                alert("Error")
-            }
-        }
-        getCompanies()
-    },[])
-
     const handleNewCompany = useCallback(async (data: NewCompanyFormInputs) => {
         try {
-            const response = await api.post(`/company`, data)
+            const { document, ...rest } = data;
+            const response = await api.post(`/company`, {
+                ...rest,
+                cnpj: document
+            })
             if (!response?.data) {
                 alert("Error")
             }
@@ -79,7 +60,7 @@ export function Feed(){
         }
     },[])
  
-    const toggleModal = useCallback((bool)=> {
+    const toggleModal = useCallback((bool: boolean)=> {
         if (bool) {
             setOpenModal(bool)
         } else {
@@ -92,7 +73,7 @@ export function Feed(){
             <S.Feed>
                 <S.TitleContainer>
                     <h2>Empresas</h2>
-                    <button onClick={()=> toggleModal(true)}>+</button>
+                    <AddButton onClick={()=> toggleModal(true)} text="+"/>
                 </S.TitleContainer>
                 {companies.map(({ address, cnpj, email, id, name, phone })=> (
                     <Expandable 

@@ -10,9 +10,9 @@ export const TypographyContainer = styled.div`
     > div {
         display: flex;
     }
-    &+& {
-        padding-left: 7rem;
-    }
+
+    padding-left: 15%;
+ 
 `
 
 export const ExpandableField = styled.p`
