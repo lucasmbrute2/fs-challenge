@@ -1,6 +1,6 @@
 # Boas vindas
 
-## Olá, esse é um projeto mono repo, aqui você poderá criar uma empresa e seus funcionários no sistema. O backend segue a Clean Architecture com NodeJS e o Frontend está em ReactJS.
+ Olá, esse é um projeto mono repo, aqui você poderá criar uma empresa e seus funcionários no sistema. O backend segue a Clean Architecture com NodeJS e o Frontend está em ReactJS.
 
 ### Como iniciar o projeto
 ```
